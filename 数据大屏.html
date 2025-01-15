@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大屏数据可视化</title>
+    <script src="echarts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- 引入世界地图数据 -->
+    <script src="world.js"></script>
+    <script src="echarts-gl.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.5.0/axios.min.js"></script>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <style>
+        .main {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-rows: 5% 95%;
+            background-image: url("background.png");
+            background-repeat: no-repeat;
+        }
+
+        .title {
+            width: 100%;
+            text-align: center;
+            line-height: 56.14px;
+            font-size: 30px;
+            font-weight: 700;
+            color: aliceblue;
+            text-shadow: 0px 0px 9px #159AFF;
+        }
+
+        .content {
+            width: 100%;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 30% 40% 30%;
+        }
+
+        .left-chart {
+            width: 100%;
+            height: 100vh;
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            /* 3行平分容器高度 */
+        }
+
+        .mid-chart {
+            width: 100%;
+            height: 100vh;
+            display: grid;
+            grid-template-rows: 1fr 5fr;
+            /* 3行平分容器高度 */
+        }
+
+        .right-chart {
+            width: 100%;
+            height: 100vh;
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            /* 3行平分容器高度 */
+        }
+
+        .chart {
+            background-image: url("kk.png");
+            background-repeat: no-repeat;
+            background-size: 100% 103%;
+            background-position: center;
+        }
+
+
+        @font-face {
+            font-family: "DS-Digital";
+            src: url("./count.ttf");
+        }
+
+        .number {
+            text-align: center;
+            font-family: DS-Digital;
+            font-size: 80px;
+            color: aliceblue;
+            line-height: 200px;
+            text-shadow: 0px 0px 9px #159AFF;
+        }
+
+        .count {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background-image: url("VCG211513642548.png");
+            background-repeat: no-repeat;
+            background-size: 120% 130%;
+            background-position: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main" class="main">
+        <div id="title" class="title">大屏可视化展板-ECharts</div>
+        <div id="content" class="content">
+            <div id="left-chart" class="left-chart">
+                <div id="chart1" class="chart chart1"></div>
+                <div id="chart2" class="chart chart2"></div>
+                <div id="chart3" class="chart chart3"></div>
+            </div>
+            <div id="mid-chart" class="mid-chart">
+                <div class="count">
+                    <div class="container number">123755</div>
+                    <div class="container number">328193</div>
+                </div>
+                <div id="chart7" class="chart7 map">111</div>
+            </div>
+            <div id="right-chart" class="right-chart">
+                <div id="chart4" class="chart chart4"></div>
+                <div id="chart5" class="chart chart5"></div>
+                <div id="chart6" class="chart chart6"></div>
+            </div>
+        </div>
+    </div>
+    <script src="chart1.js"></script>
+    <script src="chart2.js"></script>
+    <script src="chart3.js"></script>
+    <script src="chart4.js"></script>
+    <script src="chart5.js"></script>
+    <script src="chart6.js"></script>
+    <script src="chart7.js"></script>
+</body>
+
+</html>
