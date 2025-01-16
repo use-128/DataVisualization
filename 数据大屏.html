@@ -10,7 +10,9 @@
     <!-- 引入世界地图数据 -->
     <script src="world.js"></script>
     <script src="echarts-gl.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.5.0/axios.min.js"></script>
+    <script src="axios.min.js"></script>
+    <script src="china.js"></script> <!-- 引入 china.js 文件 -->
+    <script src="china.json"></script> <!-- 引入 china.json 文件 -->
     <link rel="icon" href="favicon.png" type="image/png">
     <style>
         .main {
@@ -20,6 +22,7 @@
             grid-template-rows: 5% 95%;
             background-image: url("background.png");
             background-repeat: no-repeat;
+            background-size: cover;
         }
 
         .title {
@@ -30,6 +33,20 @@
             font-weight: 700;
             color: aliceblue;
             text-shadow: 0px 0px 9px #159AFF;
+            position: relative; /* 为了定位下划线 */
+            color: #00f7ff; /* 文字颜色为科技感的蓝色 */
+        }
+
+        /* 下框线效果 */
+        .title::after {
+            content: ''; /* 创建一个空的内容来作为下框线 */
+            position: absolute; /* 定位到标题下方 */
+            left: 0; /* 从左边开始 */
+            bottom: -2px; /* 离文字稍微有点距离 */
+            width: 100%; /* 让下框线宽度与标题一致 */
+            height: 3px; /* 下框线的高度 */
+            background: linear-gradient(90deg, rgba(0, 247, 255, 0.8), rgba(255, 0, 255, 0.8)); /* 使用渐变效果 */
+            box-shadow: 0 0 10px rgba(0, 247, 255, 0.6), 0 0 15px rgba(255, 0, 255, 0.6); /* 加入光晕效果 */
         }
 
         .content {
@@ -64,12 +81,18 @@
         }
 
         .chart {
+            width: 100%;
+            height: 100%;
             background-image: url("kk.png");
             background-repeat: no-repeat;
             background-size: 100% 103%;
             background-position: center;
         }
-
+        
+        .chart7 {
+            width: 100%;
+            height: 80%;
+        }
 
         @font-face {
             font-family: "DS-Digital";
@@ -94,6 +117,114 @@
             background-position: center;
             margin-top: 10px;
         }
+
+        /* 窗口尺寸变化时调整布局 */
+        @media (max-width: 1200px) {
+            .main {}
+
+            .content {
+                grid-template-columns: 1fr 1fr 1fr; /* 中等屏幕时，调整为两列 */
+            }
+
+            .title {
+                font-size: 2vw;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr; /* 小屏幕时，调整为单列 */
+            }
+
+            .title {
+                font-size: 2vw;
+            }
+        }
+        /* 使 model_content 定位到页面的中间下方 */
+        .model_content {
+            position: fixed; /* 使用固定定位 */
+            left: 50%; /* 使其水平居中 */
+            bottom: 20px; /* 距离页面底部 20px */
+            transform: translateX(-50%); /* 完全居中对齐 */
+            z-index: 9999; /* 确保浮动层在其他内容之上 */
+            display: flex; /* 使用 flexbox 来排列两个 .model 元素 */
+            gap: 50px; /* 两个 .model 元素之间的间隙 */
+        }
+
+        /* 给 model 元素设置大小和背景蒙版 */
+        .model {
+            width: 300px; /* 设置每个 model 的宽度 */
+            height: 200px; /* 设置每个 model 的高度 */
+            background-color: rgba(173, 216, 230, 0.4); /* 设置半透明黑色背景 */
+            border-radius: 10px; /* 设置圆角 */
+            position: relative; /* 使其可嵌套其他内容 */
+            overflow: hidden; /* 隐藏超出盒子的内容 */
+        }
+
+        /* .model1 和 .model2 可以有不同的颜色或样式，按照需要自定义 */
+        .model1 {
+            background-color: rgba(0, 0, 0, 0.6); /* 半透明深黑色 */
+        }
+
+        .model2 {
+            background-color: rgba(0, 0, 0, 0.4); /* 半透明浅黑色 */
+        }
+
+        /* 滚动内容容器 */
+        .scroll-content {
+            display: flex;
+            flex-direction: column; /* 垂直排列数据 */
+            /* height: 100%; 占满父容器的高度 */
+            overflow: hidden; /* 隐藏超出容器的内容 */
+            animation: scroll 5000s linear infinite; /* 10秒循环动画 */
+        }
+
+        /* 控制数据项的间距 */
+        .scroll-content p {
+            margin: 10px 0;
+        }
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse; /* 合并边框 */
+            background-color: rgba(255, 255, 255, 0.3); /* 半透明背景 */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+        }
+
+        /* 表头样式 */
+        th {
+            background-color: rgba(0, 123, 255, 0.6); /* 半透明蓝色背景 */
+            color: white; /* 白色文字 */
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+        }
+
+        /* 表格单元格样式 */
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        /* 鼠标悬浮时改变表格行背景 */
+        tr:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+
+        /* 设置滚动动画 */
+        @keyframes scroll {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-100%); /* 向上滚动一个完整的容器高度 */
+            }
+        }
     </style>
 </head>
 
@@ -108,10 +239,10 @@
             </div>
             <div id="mid-chart" class="mid-chart">
                 <div class="count">
-                    <div class="container number">123755</div>
-                    <div class="container number">328193</div>
+                    <div id="count1" class="container number"></div>
+                    <div class="container number count2">328193</div>
                 </div>
-                <div id="chart7" class="chart7 map">111</div>
+                <div id="chart7" class="chart7 map"></div>
             </div>
             <div id="right-chart" class="right-chart">
                 <div id="chart4" class="chart chart4"></div>
@@ -120,6 +251,55 @@
             </div>
         </div>
     </div>
+    <div class="model_content">
+        <div class="model model1">
+            <div class="scroll-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="th1">城市</th>
+                            <th class="th2">天气</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- 通过 JavaScript 插入数据 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="model model2">
+            <div class="scroll-content">
+                <p>数据 A: 50</p>
+                <p>数据 B: 150</p>
+                <p>数据 C: 250</p>
+                <p>数据 D: 350</p>
+                <p>数据 E: 450</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 获取表格主体部分
+        const tableBody = document.getElementById('tableBody');
+
+        // 使用 for 循环生成数据
+        for (let i = 1; i <= 900; i++) {
+            // 创建一个新的 <tr> 元素
+            const tr = document.createElement('tr');
+
+            // 创建并插入第一列（序号）
+            const td1 = document.createElement('td');
+            td1.textContent = i; // 序号是循环变量 i
+            tr.appendChild(td1);
+
+            // 创建并插入第二列（值）
+            const td2 = document.createElement('td');
+            td2.textContent = i * 100; // 值是 i 的 100 倍
+            tr.appendChild(td2);
+
+            // 将行插入到表格主体部分
+            tableBody.appendChild(tr);
+        }
+    </script>
     <script src="chart1.js"></script>
     <script src="chart2.js"></script>
     <script src="chart3.js"></script>
@@ -127,6 +307,43 @@
     <script src="chart5.js"></script>
     <script src="chart6.js"></script>
     <script src="chart7.js"></script>
+    <script src="count1.js"></script>
+
+    <script>
+        // 监听窗口大小变化，确保 ECharts 图表自适应
+        window.addEventListener('resize', function () {
+            var chart1 = echarts.getInstanceByDom(document.getElementById('chart1'));
+            var chart2 = echarts.getInstanceByDom(document.getElementById('chart2'));
+            var chart3 = echarts.getInstanceByDom(document.getElementById('chart3'));
+            var chart4 = echarts.getInstanceByDom(document.getElementById('chart4'));
+            var chart5 = echarts.getInstanceByDom(document.getElementById('chart5'));
+            var chart6 = echarts.getInstanceByDom(document.getElementById('chart6'));
+            var chart7 = echarts.getInstanceByDom(document.getElementById('chart7'));
+
+            if (chart1) chart1.resize();
+            if (chart2) chart2.resize();
+            if (chart3) chart3.resize();
+            if (chart4) chart4.resize();
+            if (chart5) chart5.resize();
+            if (chart6) chart6.resize();
+            if (chart7) chart7.resize();
+        });
+
+        let debounceTimeout;
+
+        window.addEventListener('resize', function () {
+            // 清除之前的延时调用
+            clearTimeout(debounceTimeout);
+
+            // 设置新的延时调用，在窗口大小调整停止 300 毫秒后刷新页面
+            debounceTimeout = setTimeout(function () {
+                if (window.innerWidth < 1200) {
+                    window.location.reload();
+                }
+            }, 100); // 300 毫秒的延迟
+        });
+
+    </script>
 </body>
 
 </html>

@@ -2,11 +2,6 @@ var chartDom2 = document.getElementById('chart2');
 var myChart2 = echarts.init(chartDom2);
 var option2;
 
-// const data = [];
-// for (let i = 0; i < 5; ++i) {
-//   data.push(Math.round(Math.random() * 200));
-// }
-// console.log(data);
 option2 = {
   xAxis: {
     max: 'dataMax'
@@ -23,7 +18,11 @@ option2 = {
     text: 'ECharts 入门示例',
     left: "center",
     textStyle: {
-      color: "#fff"
+      color: "#fff",
+      textShadowColor: "#159AFF", // 设置阴影颜色
+      textShadowBlur: 5, // 阴影模糊程度
+      textShadowOffsetX: 2, // 阴影在X轴上的偏移
+      textShadowOffsetY: 2  // 阴影在Y轴上的偏移
     }
   },
   grid: {
@@ -49,11 +48,11 @@ option2 = {
   animationEasingUpdate: 'linear'
 };
 
+// 使用 axios 请求数据
 axios.get('http://localhost:5000/api/line_bar_data')
   .then(response => {
     console.log(response.data);
     const data = response.data;
-    // option2.series[0].data = data;
     option2.yAxis.data = response.data.categories;
     option2.yAxis.max = response.data.categories.length - 1;
     option2.series[0].data = response.data.values;
@@ -86,15 +85,7 @@ setTimeout(function () {
 }, 0);
 setInterval(function () {
   run();
-}, 8000);
-
-
-
+}, 3000);
 
 // 使用刚指定的配置项和数据显示图表。
 myChart2.setOption(option2);
-
-window.onresize = () => {
-  myChart2.resize();
-}
-

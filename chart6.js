@@ -29,7 +29,11 @@ option6 = {
     text: 'ECharts 入门示例',
     left: "center",
     textStyle: {
-      color: "#fff"
+      color: "#fff",
+      textShadowColor: "#159AFF", // 设置阴影颜色
+      textShadowBlur: 5, // 阴影模糊程度
+      textShadowOffsetX: 2, // 阴影在X轴上的偏移
+      textShadowOffsetY: 2  // 阴影在Y轴上的偏移
     }
   },
   grid: {
@@ -109,7 +113,3 @@ option6 = {
 
 // 使用刚指定的配置项和数据显示图表。
 option6 && myChart6.setOption(option6);
-
-window.onresize = () => {
-  myChart6.resize();
-}
