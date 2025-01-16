@@ -38,6 +38,41 @@ def get_data():
 
     return jsonify(data)
 
+@app.route('/api/weather_data')
+def get_weather_data():
+    """
+    从SQLite数据库中读取数据，并将其转换为JSON格式返回。
+
+    :return: 一个JSON格式的响应，包含从数据库中读取的数据。
+    """
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    # 查询数据
+    cursor.execute('SELECT date, city,weather, max_tem, min_tem, tem, update_time FROM weather')
+    rows = cursor.fetchall()
+
+    # 将数据转换为字典列表
+
+
+    data = [
+        {
+            'name': row[1], 
+            'value': row[5], 
+            'values': {
+                'weather':row[2],
+                'max_tem':row[3],
+                'min_tem':row[4],
+                }
+            } for row in rows
+    ]
+    # 关闭连接
+    conn.close()
+
+    return jsonify(data)
+
+
+
 @app.route('/api/line_bar_data')
 def get_line_bar_data():
     """

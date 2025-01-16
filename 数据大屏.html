@@ -12,7 +12,7 @@
     <script src="echarts-gl.min.js"></script>
     <script src="axios.min.js"></script>
     <script src="china.js"></script> <!-- 引入 china.js 文件 -->
-    <script src="china.json"></script> <!-- 引入 china.json 文件 -->
+    <script src="hunan.json"></script> <!-- 引入 china.json 文件 -->
     <link rel="icon" href="favicon.png" type="image/png">
     <style>
         .main {
@@ -33,20 +33,30 @@
             font-weight: 700;
             color: aliceblue;
             text-shadow: 0px 0px 9px #159AFF;
-            position: relative; /* 为了定位下划线 */
-            color: #00f7ff; /* 文字颜色为科技感的蓝色 */
+            position: relative;
+            /* 为了定位下划线 */
+            color: #00f7ff;
+            /* 文字颜色为科技感的蓝色 */
         }
 
         /* 下框线效果 */
         .title::after {
-            content: ''; /* 创建一个空的内容来作为下框线 */
-            position: absolute; /* 定位到标题下方 */
-            left: 0; /* 从左边开始 */
-            bottom: -2px; /* 离文字稍微有点距离 */
-            width: 100%; /* 让下框线宽度与标题一致 */
-            height: 3px; /* 下框线的高度 */
-            background: linear-gradient(90deg, rgba(0, 247, 255, 0.8), rgba(255, 0, 255, 0.8)); /* 使用渐变效果 */
-            box-shadow: 0 0 10px rgba(0, 247, 255, 0.6), 0 0 15px rgba(255, 0, 255, 0.6); /* 加入光晕效果 */
+            content: '';
+            /* 创建一个空的内容来作为下框线 */
+            position: absolute;
+            /* 定位到标题下方 */
+            left: 0;
+            /* 从左边开始 */
+            bottom: -2px;
+            /* 离文字稍微有点距离 */
+            width: 100%;
+            /* 让下框线宽度与标题一致 */
+            height: 3px;
+            /* 下框线的高度 */
+            background: linear-gradient(90deg, rgba(0, 247, 255, 0.8), rgba(255, 0, 255, 0.8));
+            /* 使用渐变效果 */
+            box-shadow: 0 0 10px rgba(0, 247, 255, 0.6), 0 0 15px rgba(255, 0, 255, 0.6);
+            /* 加入光晕效果 */
         }
 
         .content {
@@ -88,7 +98,7 @@
             background-size: 100% 103%;
             background-position: center;
         }
-        
+
         .chart7 {
             width: 100%;
             height: 80%;
@@ -123,7 +133,8 @@
             .main {}
 
             .content {
-                grid-template-columns: 1fr 1fr 1fr; /* 中等屏幕时，调整为两列 */
+                grid-template-columns: 1fr 1fr 1fr;
+                /* 中等屏幕时，调整为两列 */
             }
 
             .title {
@@ -133,50 +144,70 @@
 
         @media (max-width: 768px) {
             .content {
-                grid-template-columns: 1fr; /* 小屏幕时，调整为单列 */
+                grid-template-columns: 1fr;
+                /* 小屏幕时，调整为单列 */
             }
 
             .title {
                 font-size: 2vw;
             }
         }
+
         /* 使 model_content 定位到页面的中间下方 */
         .model_content {
-            position: fixed; /* 使用固定定位 */
-            left: 50%; /* 使其水平居中 */
-            bottom: 20px; /* 距离页面底部 20px */
-            transform: translateX(-50%); /* 完全居中对齐 */
-            z-index: 9999; /* 确保浮动层在其他内容之上 */
-            display: flex; /* 使用 flexbox 来排列两个 .model 元素 */
-            gap: 50px; /* 两个 .model 元素之间的间隙 */
+            position: fixed;
+            /* 使用固定定位 */
+            left: 50%;
+            /* 使其水平居中 */
+            bottom: 20px;
+            /* 距离页面底部 20px */
+            transform: translateX(-50%);
+            /* 完全居中对齐 */
+            z-index: 9999;
+            /* 确保浮动层在其他内容之上 */
+            display: flex;
+            /* 使用 flexbox 来排列两个 .model 元素 */
+            gap: 50px;
+            /* 两个 .model 元素之间的间隙 */
         }
 
         /* 给 model 元素设置大小和背景蒙版 */
         .model {
-            width: 300px; /* 设置每个 model 的宽度 */
-            height: 200px; /* 设置每个 model 的高度 */
-            background-color: rgba(173, 216, 230, 0.4); /* 设置半透明黑色背景 */
-            border-radius: 10px; /* 设置圆角 */
-            position: relative; /* 使其可嵌套其他内容 */
-            overflow: hidden; /* 隐藏超出盒子的内容 */
+            width: 300px;
+            /* 设置每个 model 的宽度 */
+            height: 200px;
+            /* 设置每个 model 的高度 */
+            background-color: rgba(173, 216, 230, 0.4);
+            /* 设置半透明黑色背景 */
+            border-radius: 10px;
+            /* 设置圆角 */
+            position: relative;
+            /* 使其可嵌套其他内容 */
+            overflow: hidden;
+            /* 隐藏超出盒子的内容 */
         }
 
         /* .model1 和 .model2 可以有不同的颜色或样式，按照需要自定义 */
         .model1 {
-            background-color: rgba(0, 0, 0, 0.6); /* 半透明深黑色 */
+            background-color: rgba(0, 0, 0, 0.6);
+            /* 半透明深黑色 */
         }
 
         .model2 {
-            background-color: rgba(0, 0, 0, 0.4); /* 半透明浅黑色 */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* 半透明浅黑色 */
         }
 
         /* 滚动内容容器 */
         .scroll-content {
             display: flex;
-            flex-direction: column; /* 垂直排列数据 */
+            flex-direction: column;
+            /* 垂直排列数据 */
             /* height: 100%; 占满父容器的高度 */
-            overflow: hidden; /* 隐藏超出容器的内容 */
-            animation: scroll 5000s linear infinite; /* 10秒循环动画 */
+            overflow: hidden;
+            /* 隐藏超出容器的内容 */
+            animation: scroll 5000s linear infinite;
+            /* 10秒循环动画 */
         }
 
         /* 控制数据项的间距 */
@@ -187,16 +218,21 @@
         /* 表格样式 */
         table {
             width: 100%;
-            border-collapse: collapse; /* 合并边框 */
-            background-color: rgba(255, 255, 255, 0.3); /* 半透明背景 */
+            border-collapse: collapse;
+            /* 合并边框 */
+            background-color: rgba(255, 255, 255, 0.3);
+            /* 半透明背景 */
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* 添加阴影效果 */
         }
 
         /* 表头样式 */
         th {
-            background-color: rgba(0, 123, 255, 0.6); /* 半透明蓝色背景 */
-            color: white; /* 白色文字 */
+            background-color: rgba(0, 123, 255, 0.6);
+            /* 半透明蓝色背景 */
+            color: white;
+            /* 白色文字 */
             padding: 10px;
             text-align: left;
             font-weight: bold;
@@ -221,8 +257,10 @@
             0% {
                 transform: translateY(0);
             }
+
             100% {
-                transform: translateY(-100%); /* 向上滚动一个完整的容器高度 */
+                transform: translateY(-100%);
+                /* 向上滚动一个完整的容器高度 */
             }
         }
     </style>
